@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 )
 
 // // request parameters: https://www.alphavantage.co/documentation/#batchquotes
@@ -28,7 +27,7 @@ func setsymbols(companies []string) (string, error) {
 		return "", fmt.Errorf("Error: no stock symbols provided, must provide at least 1")
 	}
 
-	symbol := "symbol="
+	var symbol string
 	for _, company := range companies {
 		symbol += company + ","
 	}
@@ -41,11 +40,10 @@ func generateURL(companies []string) (string, error) {
 		return "", err
 	}
 
-	if len(companies) == 1 {
-		return url + TIME_SERIES_DAILY + "&" + symbol + "&" + apikey, nil
+	if len(companies) == 1 { // single stock
+		return url + TIME_SERIES_DAILY + "&" + "symbol=" + symbol + "&" + "datatype=csv" + "&" + apikey, nil
 	} else { // multiple stocks
-		symbol = strings.Replace(symbol, "symbol=", "symbols=", -1)
-		return url + BATCH_STOCK_QUOTES + "&" + symbol + "&" + apikey, nil
+		return url + BATCH_STOCK_QUOTES + "&" + "symbols=" + symbol + "&" + apikey, nil
 	}
 	return "", nil
 }
