@@ -4,16 +4,8 @@ import (
 	"fmt"
 )
 
-// // request parameters: https://www.alphavantage.co/documentation/#batchquotes
-// type Request struct {
-// 	url      string // const
-// 	function string
-// 	symbol   string
-// 	interval string // intraday only
-// 	apikey   string // const
-// }
-
 const url = "https://www.alphavantage.co/query?"
+const datatype = "datatype=csv"
 const apikey = "apikey=YW42R3PU0KRA106H"
 
 // supported request functions
@@ -41,9 +33,9 @@ func generateURL(companies []string) (string, error) {
 	}
 
 	if len(companies) == 1 { // single stock
-		return url + TIME_SERIES_DAILY + "&" + "symbol=" + symbol + "&" + "datatype=csv" + "&" + apikey, nil
+		return url + TIME_SERIES_DAILY + "&" + "symbol=" + symbol + "&" + datatype + "&" + apikey, nil
 	} else { // multiple stocks
-		return url + BATCH_STOCK_QUOTES + "&" + "symbols=" + symbol + "&" + apikey, nil
+		return url + BATCH_STOCK_QUOTES + "&" + "symbols=" + symbol + "&" + datatype + "&" + apikey, nil
 	}
 	return "", nil
 }
