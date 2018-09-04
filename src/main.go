@@ -1,10 +1,16 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"strings"
+	// // graphing utility
+	// "github.com/Arafatk/glot"
 )
+
+// prints stock stalker 'man page'
+func help() {
+
+}
 
 // parse arguments and return flags, companies, and all other args as seperate arrays
 func parseArgs(args []string) ([]string, []string, []string) {
@@ -32,9 +38,31 @@ func parseArgs(args []string) ([]string, []string, []string) {
 func main() {
 	flags, companies, miscArgs := parseArgs(os.Args[1:]) // ignore executable
 
-	if len(companies) == 1 {
-		print_TIME_SERIES_DAILY(args)
-	} else {
-		print_BATCH_STOCK_QUOTES(args)
+	for _, flag := range flags {
+		switch strings.ToLower(flag) {
+		case "print history", "f":
+			printHistory()
+
+		case "help", "h":
+			help()
+
+		case "interval", "i":
+
+		case "print daily change", "r":
+
+		case "track", "t":
+
+		case "update history", "u":
+			updateHistory(companies[0], miscArgs)
+
+		default:
+			help()
+		}
 	}
+
+	// if len(companies) == 1 {
+	// 	print_TIME_SERIES_DAILY(companies)
+	// } else {
+	// 	print_BATCH_STOCK_QUOTES(companies)
+	// }
 }

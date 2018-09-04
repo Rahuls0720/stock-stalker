@@ -13,10 +13,10 @@ func parse_BATCH_STOCK_QUOTES(data string) map[string]float64 {
 	for _, line := range strings.Split(data, "\n")[1:] {
 		if len(line) > 0 {
 			arr := strings.Split(line, ",")
-			fmt.Println(arr)
-			value, _ := strconv.ParseFloat(arr[1], 64)
-
-			mapping[arr[0]] = value
+			if len(arr) > 1 {
+				value, _ := strconv.ParseFloat(arr[1], 64)
+				mapping[arr[0]] = value
+			}
 		}
 	}
 	return mapping

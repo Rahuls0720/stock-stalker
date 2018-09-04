@@ -13,11 +13,13 @@ func parse_TIME_SERIES_DAILY(data string) ([]string, []string) {
 	for _, line := range strings.Split(data, "\n")[1:] {
 		if len(line) > 0 {
 			arr := strings.Split(line, ",")
-			// value, _ := strconv.ParseFloat(arr[2], 64)
-			value := arr[2]
+			if len(arr) > 1 {
+				// value, _ := strconv.ParseFloat(arr[2], 64)
+				value := arr[2]
 
-			date = append(date, arr[0])
-			price = append(price, value)
+				date = append(date, arr[0])
+				price = append(price, value)
+			}
 		}
 	}
 	return date, price
